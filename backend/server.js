@@ -100,10 +100,11 @@ app.get('/api/jobs', async (req, res) => {
   }
 
   let whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
-  let query = `SELECT * FROM jobs ${whereClause} ORDER BY posted_date DESC LIMIT 400`;
-
-  let jobs = db.prepare(query).all(...params);
   
+  let query = `SELECT * FROM jobs ${whereClause} ORDER BY posted_date DESC LIMIT 20000`;
+  
+  let jobs = db.prepare(query).all(...params);
+
   // Shuffle the jobs to mix sources perfectly
   for (let i = jobs.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
