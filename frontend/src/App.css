@@ -1,0 +1,41 @@
+.app-container {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-title {
+  text-shadow: 0 0 40px rgba(0, 242, 254, 0.3);
+}
+
+.hero-subtitle {
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.glass-panel {
+  position: relative;
+  z-index: 2;
+}
+
+/* Modal styling */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.8);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: var(--surface-color);
+  border: 1px solid var(--primary-color);
+  box-shadow: 0 0 30px rgba(0, 242, 254, 0.2);
+  padding: 3rem;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 500px;
+  animation: fade-in-up 0.4s ease-out;
+}
