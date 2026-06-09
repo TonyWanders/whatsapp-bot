@@ -16,6 +16,8 @@ const targets = [
   
   // Jobberman Feeds
   { type: 'rss', url: 'https://www.jobberman.com/jobs/rss', name: 'Jobberman Nationwide' },
+  { type: 'rss', url: 'https://www.jobberman.com/jobs/engineering-technology/rss', name: 'Jobberman Oil & Gas / Engineering' },
+  { type: 'rss', url: 'https://www.jobberman.com/jobs/admin-office/rss', name: 'Jobberman Administrative' },
   { type: 'rss', url: 'https://www.jobberman.com/jobs/it-software/rss', name: 'Jobberman Tech' },
   { type: 'rss', url: 'https://www.jobberman.com/jobs/accounting-auditing-finance/rss', name: 'Jobberman Finance' },
   { type: 'rss', url: 'https://www.jobberman.com/jobs/sales/rss', name: 'Jobberman Sales' },
@@ -23,6 +25,8 @@ const targets = [
 
   // Ngcareers Feeds
   { type: 'rss', url: 'https://ngcareers.com/jobs/rss', name: 'Ngcareers Nationwide' },
+  { type: 'rss', url: 'https://ngcareers.com/jobs/category/oil-and-gas/rss', name: 'Ngcareers Oil & Gas' },
+  { type: 'rss', url: 'https://ngcareers.com/jobs/category/administrative/rss', name: 'Ngcareers Administrative' },
   { type: 'rss', url: 'https://ngcareers.com/jobs/category/information-technology/rss', name: 'Ngcareers Tech' },
   { type: 'rss', url: 'https://ngcareers.com/jobs/category/accounting/rss', name: 'Ngcareers Finance' },
   { type: 'rss', url: 'https://ngcareers.com/jobs/category/sales/rss', name: 'Ngcareers Sales' },
