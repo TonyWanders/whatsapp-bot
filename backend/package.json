@@ -24,9 +24,6 @@
     "jsonwebtoken": "^9.0.3",
     "localtunnel": "^2.0.2",
     "node-cron": "^4.2.1",
-    "puppeteer": "^25.1.0",
-    "puppeteer-extra": "^3.3.6",
-    "puppeteer-extra-plugin-stealth": "^2.11.2",
     "rss-parser": "^3.13.0"
   }
 }

@@ -108,6 +108,16 @@ async function pushToGitHub() {
     });
     
     console.log("Successfully pushed!");
+
+    // Trigger Render Deployment automatically!
+    console.log("Triggering Render deployment...");
+    const renderHookUrl = "https://api.render.com/deploy/srv-d8jagpk8aovs7394mt5g?key=OaapCq9zmoE";
+    try {
+        const res = await axios.post(renderHookUrl);
+        console.log("Render deploy triggered successfully:", res.data);
+    } catch (e) {
+        console.error("Failed to trigger Render deploy:", e.message);
+    }
 }
 
 pushToGitHub().catch(err => {
