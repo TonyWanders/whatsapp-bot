@@ -48,12 +48,26 @@ async function pushToGitHub() {
         
         console.log(`Uploading ${githubPath}...`);
         
-        const { data: blobData } = await octokit.rest.git.createBlob({
-            owner,
-            repo,
-            content: content.toString('base64'),
-            encoding: "base64"
-        });
+        let blobData;
+        let retries = 3;
+        while (retries > 0) {
+            try {
+                const res = await octokit.rest.git.createBlob({
+                    owner,
+                    repo,
+                    content: content.toString('base64'),
+                    encoding: "base64",
+                    request: { timeout: 30000 } // 30s timeout
+                });
+                blobData = res.data;
+                break; // success
+            } catch (err) {
+                retries--;
+                console.log(`Failed to upload ${githubPath}, retries left: ${retries}. Error: ${err.message}`);
+                if (retries === 0) throw err;
+                await new Promise(r => setTimeout(r, 2000));
+            }
+        }
         
         tree.push({
             path: githubPath,
@@ -61,6 +75,9 @@ async function pushToGitHub() {
             type: "blob",
             sha: blobData.sha
         });
+        
+        // Small delay to prevent hitting rate limits
+        await new Promise(r => setTimeout(r, 500));
     }
 
     console.log("Creating new tree...");

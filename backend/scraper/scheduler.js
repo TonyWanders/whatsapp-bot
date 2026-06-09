@@ -7,18 +7,26 @@ const locations = require('../data/locations');
 const SCRAPE_INTERVAL_MS = 5 * 60 * 1000; // 5 minutes
 
 const targets = [
-  // Nationwide General Jobs (Crucial for all 36 states)
+  // Nationwide General Jobs
   { type: 'myjobmag', url: 'https://www.myjobmag.com/jobs', name: 'MyJobMag Nationwide' },
-  { type: 'jobzilla', url: 'https://www.jobzilla.ng/', name: 'Jobzilla Nationwide' },
+  { type: 'jobzilla', url: 'https://www.jobzilla.ng/jobs', name: 'Jobzilla Nationwide' },
 
-
-  // RSS Aggregators & Explicit Sources (The Super Scaler)
-  { type: 'rss', url: 'https://ng.jooble.org/api/rss', name: 'Jooble Aggregator' },
-  { type: 'rss', url: 'https://ng.indeed.com/rss?q=', name: 'Indeed Aggregator' },
+  // Working RSS Aggregators (Categorized to expand sources)
   { type: 'rss', url: 'https://www.hotnigerianjobs.com/rss.xml', name: 'HotNigerianJobs' },
-  { type: 'rss', url: 'https://www.jobberman.com/jobs/rss', name: 'Jobberman' },
-  { type: 'rss', url: 'https://ngcareers.com/jobs/rss', name: 'Ngcareers' },
-  { type: 'rss', url: 'https://www.jobgurus.com.ng/jobs/rss', name: 'Jobgurus' }
+  
+  // Jobberman Feeds
+  { type: 'rss', url: 'https://www.jobberman.com/jobs/rss', name: 'Jobberman Nationwide' },
+  { type: 'rss', url: 'https://www.jobberman.com/jobs/it-software/rss', name: 'Jobberman Tech' },
+  { type: 'rss', url: 'https://www.jobberman.com/jobs/accounting-auditing-finance/rss', name: 'Jobberman Finance' },
+  { type: 'rss', url: 'https://www.jobberman.com/jobs/sales/rss', name: 'Jobberman Sales' },
+  { type: 'rss', url: 'https://www.jobberman.com/jobs/human-resources/rss', name: 'Jobberman HR' },
+
+  // Ngcareers Feeds
+  { type: 'rss', url: 'https://ngcareers.com/jobs/rss', name: 'Ngcareers Nationwide' },
+  { type: 'rss', url: 'https://ngcareers.com/jobs/category/information-technology/rss', name: 'Ngcareers Tech' },
+  { type: 'rss', url: 'https://ngcareers.com/jobs/category/accounting/rss', name: 'Ngcareers Finance' },
+  { type: 'rss', url: 'https://ngcareers.com/jobs/category/sales/rss', name: 'Ngcareers Sales' },
+  { type: 'rss', url: 'https://ngcareers.com/jobs/category/medical/rss', name: 'Ngcareers Medical' },
 ];
 
 // Dynamically generate targets for all 36 States + Abuja

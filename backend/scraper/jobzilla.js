@@ -1,44 +1,42 @@
-const puppeteer = require('puppeteer-extra');
-const StealthPlugin = require('puppeteer-extra-plugin-stealth');
-puppeteer.use(StealthPlugin());
+const fetch = require('node-fetch');
 const cheerio = require('cheerio');
 const crypto = require('crypto');
 const db = require('../db/database');
 const locations = require('../data/locations');
 
 async function scrapeJobzillaCategory(categoryUrl) {
-  console.log(`[Jobzilla] Scraping category (STEALTH): ${categoryUrl}`);
+  console.log(`[Jobzilla] Scraping category (FETCH): ${categoryUrl}`);
   let totalNewJobs = 0;
-  const maxPages = 30; // Deep scrape
+  const maxPages = 3; // Reduced for faster initial scrape
   
-  let browser;
   try {
     const insertJob = db.prepare('INSERT OR IGNORE INTO jobs (id, title, company, state, city, url, posted_date) VALUES (?, ?, ?, ?, ?, ?, ?)');
-
-    browser = await puppeteer.launch({
-      headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
-    });
-    const pageObj = await browser.newPage();
-    // Jobzilla might be slow, give it generous timeout
-    await pageObj.setDefaultNavigationTimeout(60000);
 
     for (let page = 1; page <= maxPages; page++) {
       const pageUrl = page === 1 ? categoryUrl : `${categoryUrl}?page=${page}`;
       
+      let content;
       try {
-        await pageObj.goto(pageUrl, { waitUntil: 'networkidle2' });
+        const response = await fetch(pageUrl, {
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+          }
+        });
+        if (!response.ok) {
+           console.log(`[Jobzilla] Failed to fetch ${pageUrl} - Status: ${response.status}`);
+           break;
+        }
+        content = await response.text();
       } catch (err) {
-        console.log(`[Jobzilla] Failed to navigate to ${pageUrl} - ${err.message}`);
+        console.log(`[Jobzilla] Failed to fetch ${pageUrl} - ${err.message}`);
         continue;
       }
       
-      const content = await pageObj.content();
       const $ = cheerio.load(content);
       const jobCards = $('.card.border-0.shadow.overflow-hidden');
       
       if (jobCards.length === 0) {
-        console.log(`[Jobzilla] No job cards found at ${pageUrl}. Could be a 404 or block.`);
+        console.log(`[Jobzilla] No job cards found at ${pageUrl}. Could be end of pages.`);
         break;
       }
 
@@ -78,14 +76,12 @@ async function scrapeJobzillaCategory(categoryUrl) {
         if (result.changes > 0) totalNewJobs++;
       });
       
-      await new Promise(r => setTimeout(r, 2000));
+      await new Promise(r => setTimeout(r, 1000));
     }
     
     console.log(`[Jobzilla] Finished ${categoryUrl}. Added ${totalNewJobs} new jobs.`);
-    if (browser) await browser.close();
     return { success: true, count: totalNewJobs };
   } catch (error) {
-    if (browser) await browser.close();
     console.error(`[Jobzilla] Error scraping ${categoryUrl}:`, error.message);
     return { success: false, error: error.message };
   }

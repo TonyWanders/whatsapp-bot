@@ -7,7 +7,7 @@ const locations = require('../data/locations');
 async function scrapeMyJobMagCategory(categoryUrl) {
   console.log(`[MyJobMag] Scraping category: ${categoryUrl}`);
   let totalNewJobs = 0;
-  const maxPages = 10; // Deep scrape
+  const maxPages = 3; // Reduced for faster initial scrape
   
   try {
     const insertJob = db.prepare('INSERT OR IGNORE INTO jobs (id, title, company, state, city, url, posted_date) VALUES (?, ?, ?, ?, ?, ?, ?)');
