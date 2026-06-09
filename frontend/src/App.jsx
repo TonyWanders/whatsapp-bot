@@ -3,7 +3,8 @@ import axios from 'axios';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import JobBoard from './components/JobBoard';
 import Admin from './pages/Admin';
-import { Briefcase, ShieldAlert, Lock, Settings } from 'lucide-react';
+import PersonalBoard from './pages/PersonalBoard';
+import { Briefcase, ShieldAlert, Lock, Settings, Target } from 'lucide-react';
 
 function App() {
   const [isSetup, setIsSetup] = useState(true);
@@ -88,20 +89,27 @@ function App() {
   return (
     <BrowserRouter>
       <div className="app-container">
-        <header>
+        <header style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
           <Link to="/" className="logo">
             <Briefcase size={28} color="var(--primary-color)" />
             Nigeria<span>Jobs</span>
           </Link>
-          <Link to="/admin" className="btn" title="Admin Control Panel" style={{ marginLeft: 'auto' }}>
-            <ShieldAlert size={18} />
-            Admin Dashboard
-          </Link>
+          <div style={{ marginLeft: 'auto', display: 'flex', gap: '1rem' }}>
+            <Link to="/vip" className="btn btn-primary" title="Personal Target Portal">
+              <Target size={18} />
+              VIP Targets
+            </Link>
+            <Link to="/admin" className="btn" title="Admin Control Panel">
+              <ShieldAlert size={18} />
+              Admin
+            </Link>
+          </div>
         </header>
 
         <Routes>
           <Route path="/" element={<JobBoard />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/vip" element={<PersonalBoard />} />
         </Routes>
       </div>
     </BrowserRouter>
