@@ -107,7 +107,7 @@ const JobBoard = () => {
       {/* HERO SECTION */}
       <div className="hero-section" style={{ textAlign: 'center', padding: '4rem 1rem', marginBottom: '2rem' }}>
         <h1 className="hero-title" style={{ fontSize: '3.5rem', marginBottom: '1rem', fontWeight: '700' }}>
-          Find Your Next <span className="text-gradient">Dream Job</span>
+          Find Your Next <span className="text-gradient">Dream Job</span> <span style={{fontSize: '1rem', color: 'gray', verticalAlign: 'middle'}}>v1.43</span>
         </h1>
         <p className="hero-subtitle" style={{ fontSize: '1.2rem', color: 'var(--text-secondary)', maxWidth: '600px', margin: '0 auto 2rem auto' }}>
           We scan 20+ top Nigerian job boards continuously so you don't have to.
