@@ -36,7 +36,7 @@ async function pushToGitHub() {
     const files = glob.sync("**/*", { 
         cwd: baseDir, 
         nodir: true,
-        ignore: ['node_modules/**', 'frontend/node_modules/**', 'backend/node_modules/**', 'frontend/dist/**', '.git/**', '.env', 'backend/db/*.sqlite', 'backend/.wwebjs_auth/**', 'backend/.wwebjs_cache/**']
+        ignore: ['node_modules/**', 'frontend/node_modules/**', 'backend/node_modules/**', '.git/**', '.env', 'backend/.wwebjs_auth/**', 'backend/.wwebjs_cache/**']
     });
     
     const tree = [];
