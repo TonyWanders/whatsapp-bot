@@ -4,7 +4,8 @@ import { MapPin, Clock, Building, Search, Briefcase, ExternalLink, Lock, CheckCi
 import { formatDistanceToNow, differenceInDays } from 'date-fns';
 
 const API_URL = '/api';
-const TARGET_KEYWORDS = ['oil', 'gas', 'admin', 'executive assistant', 'hr assistant', 'human resources', 'petroleum', 'energy', 'administrative'];
+const INDUSTRY_KEYWORDS = ['oil', 'gas', 'petroleum', 'energy', 'shell', 'chevron', 'total', 'nnpc', 'seplat', 'oando', 'nlng'];
+const ROLE_KEYWORDS = ['admin', 'executive', 'hr ', 'human resources', 'assistant', 'secretary', 'office', 'clerk', 'manager', 'receptionist', 'officer', 'coordinator'];
 const PERSONAL_PASSWORD = 'oilmoney'; // Hardcoded simple password for personal use
 
 const PersonalBoard = () => {
@@ -43,10 +44,14 @@ const PersonalBoard = () => {
     setLoading(true);
     try {
       const res = await axios.get(`${API_URL}/jobs`);
-      // Filter jobs specifically for the personal targets
+      // Filter jobs specifically for Administrative roles INSIDE Oil & Gas
       const filtered = res.data.filter(job => {
         const searchText = `${job.title} ${job.company}`.toLowerCase();
-        return TARGET_KEYWORDS.some(keyword => searchText.includes(keyword));
+        const isOilAndGas = INDUSTRY_KEYWORDS.some(keyword => searchText.includes(keyword));
+        const isAdminRole = ROLE_KEYWORDS.some(keyword => searchText.includes(keyword));
+        
+        // Return jobs that match BOTH Oil/Gas industry AND Admin/HR/Executive roles
+        return isOilAndGas && isAdminRole;
       });
       setJobs(filtered);
     } catch (error) {
@@ -62,7 +67,7 @@ const PersonalBoard = () => {
         <div className="glass-panel" style={{ padding: '3rem', textAlign: 'center', maxWidth: '400px', width: '100%' }}>
           <Lock size={48} color="var(--primary-color)" style={{ marginBottom: '1rem' }} />
           <h2 style={{ marginBottom: '1rem' }}>Personal <span style={{ color: 'var(--primary-color)' }}>Targets</span></h2>
-          <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>This section aggressively filters and pumps Oil & Gas and Administrative roles specifically for the owner.</p>
+          <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>This VIP section exclusively filters for Administrative and HR roles specifically within Oil & Gas companies.</p>
           
           <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <input 
