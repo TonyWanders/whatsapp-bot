@@ -69,19 +69,6 @@ app.get('/api/locations', (req, res) => {
 
 app.get('/api/jobs', async (req, res) => {
   const { state, city, search } = req.query;
-  
-  if (search && search.trim() !== '') {
-    try {
-      // Trigger live scrape to ensure we have "literally all the jobs" for this keyword
-      const searchUrl = `https://www.myjobmag.com/search/jobs?q=${encodeURIComponent(search.trim())}`;
-      const scrapeMyJobMag = require('./scraper/myjobmag');
-      console.log(`Live search triggered for: ${search.trim()}`);
-      await scrapeMyJobMag(searchUrl);
-    } catch(err) {
-      console.error('Live search error:', err.message);
-    }
-  }
-
   let conditions = [];
   let params = [];
   

@@ -4,7 +4,7 @@ import { MapPin, Clock, Building, Search, Briefcase, ExternalLink, Lock, CheckCi
 import { formatDistanceToNow, differenceInDays } from 'date-fns';
 
 const API_URL = '/api';
-const INDUSTRY_KEYWORDS = ['oil', 'gas', 'petroleum', 'energy', 'shell', 'chevron', 'total', 'nnpc', 'seplat', 'oando', 'nlng'];
+const INDUSTRY_KEYWORDS = ['oil', 'gas', 'petroleum', 'energy', 'shell', 'chevron', 'total', 'nnpc', 'seplat', 'oando', 'nlng', 'offshore', 'drilling', 'mobil', 'agip'];
 const ROLE_KEYWORDS = ['admin', 'executive', 'hr ', 'human resources', 'assistant', 'secretary', 'office', 'clerk', 'manager', 'receptionist', 'officer', 'coordinator'];
 const PERSONAL_PASSWORD = 'oilmoney'; // Hardcoded simple password for personal use
 
@@ -44,14 +44,14 @@ const PersonalBoard = () => {
     setLoading(true);
     try {
       const res = await axios.get(`${API_URL}/jobs`);
-      // Filter jobs specifically for Administrative roles INSIDE Oil & Gas
+      // Filter jobs specifically for Administrative roles OR Oil & Gas companies
       const filtered = res.data.filter(job => {
         const searchText = `${job.title} ${job.company}`.toLowerCase();
         const isOilAndGas = INDUSTRY_KEYWORDS.some(keyword => searchText.includes(keyword));
         const isAdminRole = ROLE_KEYWORDS.some(keyword => searchText.includes(keyword));
         
-        // Return jobs that match BOTH Oil/Gas industry AND Admin/HR/Executive roles
-        return isOilAndGas && isAdminRole;
+        // Return jobs that match EITHER Oil/Gas industry OR Admin/HR/Executive roles
+        return isOilAndGas || isAdminRole;
       });
       setJobs(filtered);
     } catch (error) {
