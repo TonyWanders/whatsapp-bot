@@ -2,6 +2,7 @@ const { Octokit } = require("@octokit/rest");
 const glob = require("glob");
 const fs = require("fs");
 const path = require("path");
+const axios = require("axios");
 
 const token = process.argv[2];
 if (!token) {

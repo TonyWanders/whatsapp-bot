@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Job Board",
   "scripts": {
+    "postinstall": "cd backend && npm install",
     "build": "cd backend && npm install",
     "start": "cd backend && node server.js"
   }
