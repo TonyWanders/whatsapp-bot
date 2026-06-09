@@ -9,7 +9,7 @@ const locations = require('../data/locations');
 async function scrapeJobzillaCategory(categoryUrl) {
   console.log(`[Jobzilla] Scraping category (STEALTH): ${categoryUrl}`);
   let totalNewJobs = 0;
-  const maxPages = 10; // Deep scrape
+  const maxPages = 30; // Deep scrape
   
   let browser;
   try {

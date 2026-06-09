@@ -86,11 +86,11 @@ app.get('/api/jobs', async (req, res) => {
   let params = [];
   
   if (city && city !== 'All') {
-    conditions.push('city = ?');
-    params.push(city);
+    conditions.push('city LIKE ?');
+    params.push(`%${city}%`);
   } else if (state && state !== 'All') {
-    conditions.push('state = ?');
-    params.push(state);
+    conditions.push('state LIKE ?');
+    params.push(`%${state}%`);
   }
 
   if (search && search.trim() !== '') {
